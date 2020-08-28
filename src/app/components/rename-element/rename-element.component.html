@@ -1,0 +1,34 @@
+<div *ngIf="renameElementService.getModalRename()">   
+    <div  class="modal open-modal" tabindex="-1" role="dialog" style="display:block;">
+         <div class="modal-dialog modal-lg" role="document">
+             <div class="modal-content bg-dark">
+                 <div class="modal-header">
+                     <h5 class="modal-title text-white" >Renombrar un Elemento </h5>
+                     <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>
+                 </div>
+                 <div class="modal-body">
+                     <div class="container">
+                         <div class="row">
+                             <div class="col-sm">
+                                 <div class="input-group mb-3">
+                                    <div *ngIf="renameElementService.getOldName()" class="alert alert-info col-lg-12 my-2">Nombre actual: {{renameElementService.getOldName()}}</div>
+
+                                    <input type="text" #txtNewName (keyup.enter)="upadteName(txtNewName.value)" 
+                                    class="form-control" placeholder="Nuevo nombre SIN EXTENSION">
+ 
+                             </div>
+                         </div>
+                         </div>
+                     </div>
+ 
+ 
+                 </div>
+                 <div class="modal-footer">
+                    <button (click)="upadteName(txtNewName.value)" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Renombrar</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>

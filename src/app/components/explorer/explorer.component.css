@@ -1,0 +1,48 @@
+/*estilos de cada img que contiene al archivo*/
+.file {
+    width: 100%;
+    height: 100%;
+}
+/*********/
+/*estilos del contenedor de cada archivo*/
+.bg-file {
+    background-color: #19261F;
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.bg-file:hover {
+    background-color: silver;
+    cursor: pointer;
+}
+
+.bg-file-selected {
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+/**********/
+/*estilos del contenedor general de todos los archivos*/
+.files-container {
+    padding: 1%;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+/*********/
+/*estilos de los iconos de los botones*/
+.icon {
+    width: 24px;
+    height: 24px;
+}
+/*********/
+/*estilos del menu contextual*/
+.mc-hover {
+    background-color: black;
+    color: white;
+}
+
+.mc-hover:hover {
+    background-color: white;
+    color: black;
+}
+/***********/

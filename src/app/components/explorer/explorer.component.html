@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" class="btn btn-outline-info btn-sm mr-2" (click)="navigateUp()">
+        <img src="/assets/icons/icon-font/arrow-up-2.png" class="icon">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <input type="text" class="form-control" disabled [value]="path">
+</nav>
+
+<div class="container my-3">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12 my-1">
+            <input type="text" class="form-control" placeholder="Ir a..." #txtGoTo (keyup.enter)="getFiles(txtGoTo.value)">
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12 my-1">
+            <div class="form-group row ml-0">
+                <button class="btn btn-outline-info mr-2 col-lg-2 col-md-2 col-sm-5 col-5" (click)="toggleNameFolder()">
+                    <img src="/assets/icons/icon-font/new-folder-2.png" class="icon"> Crear Folder
+                </button>
+                <input type="text" class="form-control col-lg-6 col-md-6 col-sm-6 col-6" placeholder="Nombre para el folder" 
+                    style="display:none" id="txtNameFolder" #txtNameFolder (keyup.enter)="createFolder(txtNameFolder.value)">
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <button class="btn btn-outline-info mr-2 col-sm-5 col-5" (click)="openForm('folder')">
+                <img src="/assets/icons/icon-font/folder-2.png" class="icon"> Import Folder
+            </button>
+            <button class="btn btn-outline-info col-sm-5 col-5" (click)="openForm('files')">
+                <img src="/assets/icons/icon-font/file-2.png" class="icon"> Import Archivos
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="this.driveHomeService.getArrFiles()?.length > 0" class="row my-3 text-center files-container" (click)="unSelect()" (keypress)="selectAll($event)" tabindex="0">
+        <!--archivos-->
+        <div class="col-lg-1 col-md-2 col-sm-2 col-4 m-1 bg-file" *ngFor="let file of this.driveHomeService.getArrFiles(); let i = index">
+            <!--archivos-->
+            <div  *ngIf="file.extension != undefined">
+                <img  class="file" 
+                src="/assets/icons/png/{{file.extension}}.png" onerror="this.src='/assets/icons/png/default.png'" 
+                [attr.data-value]="i" (click)="selectItem($event)" (contextmenu)="rightClick($event)" 
+                [alt]="file.fileDrive.name" [title]="file.fileDrive.name">
+                <div *ngIf="file.fileDrive.name.length > 8" class="text-white text-center">{{file.fileDrive.name | slice:0:4}}...</div>
+                <div *ngIf="file.fileDrive.name.length <= 8" class="text-white text-center">{{file.fileDrive.name}}</div>
+            </div>
+            <!--folders-->
+            <div *ngIf="file.extension == undefined" >
+                <img class="file" 
+                src="/assets/icons/png/folder.png" [attr.data-value]="i" 
+                (click)="selectItem($event)" (contextmenu)="rightClick($event)" [alt]="file.fileDrive.name"
+                [title]="file.fileDrive.name" (dblclick)="openFolder($event)">
+                <div *ngIf="file.fileDrive.name.length > 8" class="text-white text-center">{{file.fileDrive.name | slice:0:4}}...</div>
+                <div *ngIf="file.fileDrive.name.length <= 8" class="text-white text-center">{{file.fileDrive.name}}</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-------------------------MENU CONTEXTUAL------------------------------------------------->
+
+<div style="visibility: hidden; position: fixed"
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y"
+    [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+	<ng-template matMenuContent>
+		<button class="mc-hover" mat-menu-item *ngFor="let option of mcOptions" (click)="execMenuCOption(option)">{{option}}</button>
+	</ng-template>
+</mat-menu>
+<!---------------------------------------------------------------------------------------->
+<app-upload *ngIf="path" [path]="path"></app-upload>
+<app-rename-element></app-rename-element>
