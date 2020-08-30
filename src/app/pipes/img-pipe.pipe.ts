@@ -12,13 +12,14 @@ export class ImgPipePipe implements PipeTransform {
   constructor(private httpClient: HttpClient) {}
 
   transform(url: string): any {
-    // console.log(url);
-    return this.httpClient.get(url).pipe(
+    return this.httpClient.get(url, { responseType: 'blob' }).pipe(
+      map (res => {
+        return url;
+      }),
       catchError(error => {
-        console.log(error);
+        // console.log(error);
         return of(this.defaultIcon);
     }));
 
   }
-
 }
