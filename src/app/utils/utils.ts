@@ -26,7 +26,7 @@ export class Utils {
     }
 
     public validatePath(path: string): boolean {
-        const regex = new RegExp('^(.+)\/([^/]+)$');
+        const regex = new RegExp('^(.+)\/([^/]*)$');
 
         return regex.test(path);
     }

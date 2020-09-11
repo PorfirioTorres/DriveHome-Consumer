@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatMenuModule} from '@angular/material/menu';
 import { ImgPipePipe } from './pipes/img-pipe.pipe';
 import { RenameElementComponent } from './components/rename-element/rename-element.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { RenameElementComponent } from './components/rename-element/rename-eleme
     ExplorerComponent,
     UploadComponent,
     ImgPipePipe,
-    RenameElementComponent
+    RenameElementComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

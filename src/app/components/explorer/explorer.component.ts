@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 import { DriveHomeService } from '../../services/drive-home.service';
@@ -27,16 +28,22 @@ export class ExplorerComponent implements OnInit {
   pathBase: string;
 
   constructor(private formsUploadService: FormsUploadService, public driveHomeService: DriveHomeService,
-              private renameElementService: RenameElementService) {
+              private renameElementService: RenameElementService, private router: Router) {
 
     this.itemsSelected = [];
   }
 
   ngOnInit(): void {
-    // ========lanza la busqueda de archivos en el path actual==========
-    this.pathBase = 'c:/cloud';
-    this.path = this.pathBase;
-    this.getFiles(this.path);
+    this.pathBase = localStorage.getItem('userPath');
+
+    if (this.pathBase === null) {
+      Swal.fire('Error', 'No se ha encontrado ningún path', 'error');
+      this.router.navigate(['/welcome']);
+    } else {
+      localStorage.removeItem('userPath');
+      this.path = this.pathBase;
+      this.getFiles(this.path);
+    }
   }
 
   public getFiles(pathParam: string): void {
